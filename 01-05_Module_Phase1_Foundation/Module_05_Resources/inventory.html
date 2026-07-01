@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nord Bank - API Endpoints</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0d1125 100%);
+            min-height: 100vh;
+            color: #e0e6f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-bottom: 2px solid rgba(100, 149, 237, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .header .logo {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .header .badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 20px;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            color: #60a5fa;
+        }
+
+        .header .base-url {
+            margin-top: 12px;
+            font-size: 20px;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.08);
+            padding: 8px 24px;
+            border-radius: 8px;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 14px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .stat-card.green .number { color: #34d399; }
+        .stat-card.purple .number { color: #a78bfa; }
+        .stat-card.yellow .number { color: #fbbf24; }
+        .stat-card.pink .number { color: #f472b6; }
+        .stat-card.orange .number { color: #fb923c; }
+
+        /* Category Section */
+        .category {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .category:hover {
+            border-color: rgba(96, 165, 250, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .category-header .icon {
+            font-size: 24px;
+        }
+
+        .category-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e0e6f0;
+        }
+
+        .category-header .count {
+            margin-left: auto;
+            font-size: 12px;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 12px;
+            border-radius: 12px;
+        }
+
+        /* Endpoint List */
+        .endpoint-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .endpoint-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-left: 3px solid transparent;
+        }
+
+        .endpoint-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #60a5fa;
+        }
+
+        .endpoint-item .device-name {
+            font-weight: 500;
+            color: #e0e6f0;
+            font-size: 13px;
+            min-width: 120px;
+        }
+
+        .endpoint-item .link-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .endpoint-item .link-wrapper a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            word-break: break-all;
+            transition: color 0.3s ease;
+        }
+
+        .endpoint-item .link-wrapper a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #94a3b8;
+            padding: 3px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+        }
+
+        .copy-btn.copied {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        /* Device Details Table */
+        .device-details {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .device-details th {
+            text-align: left;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .device-details td {
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            vertical-align: middle;
+        }
+
+        .device-details tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-badge.online {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .status-badge.offline {
+            background: rgba(244, 114, 182, 0.15);
+            color: #f472b6;
+        }
+
+        .status-badge.degraded {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+
+        .status-badge.standby {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+        }
+
+        .status-badge.active {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .status-badge.up {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .status-badge.down {
+            background: rgba(244, 114, 182, 0.15);
+            color: #f472b6;
+        }
+
+        /* Details Expand Button */
+        .toggle-details {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #94a3b8;
+            padding: 2px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-details:hover {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+        }
+
+        .details-container {
+            display: none;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .details-container.show {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(96, 165, 250, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header .logo {
+                font-size: 28px;
+            }
+            .header .base-url {
+                font-size: 14px;
+                padding: 6px 16px;
+                word-break: break-all;
+            }
+            .category {
+                padding: 12px 14px;
+            }
+            .endpoint-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 8px 10px;
+            }
+            .endpoint-item .device-name {
+                min-width: auto;
+                font-size: 12px;
+            }
+            .endpoint-item .link-wrapper {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .endpoint-item .link-wrapper a {
+                font-size: 11px;
+            }
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stat-card .number {
+                font-size: 22px;
+            }
+            .device-details th,
+            .device-details td {
+                padding: 4px 6px;
+                font-size: 11px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .device-details {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .device-details th,
+            .device-details td {
+                font-size: 10px;
+                padding: 3px 5px;
+            }
+        }
+
+        /* Print friendly */
+        @media print {
+            body {
+                background: white;
+                color: #000;
+            }
+            .stat-card {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+            }
+            .category {
+                background: #fafafa;
+                border: 1px solid #ddd;
+            }
+            .endpoint-item {
+                background: #f5f5f5;
+            }
+            .endpoint-item .link-wrapper a {
+                color: #0066cc;
+            }
+            .copy-btn {
+                display: none;
+            }
+            .toggle-details {
+                display: none;
+            }
+            .details-container {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">🏦 Nord Bank</div>
+            <div class="subtitle">Complete Banking Inventory API</div>
+            <div class="badge">⚡ Mockoon Simulation</div>
+            <br />
+            <div class="base-url">🌐 http://192.168.0.101:3001</div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number">12</div>
+                <div class="label">📡 Endpoints</div>
+            </div>
+            <div class="stat-card green">
+                <div class="number">85</div>
+                <div class="label">🖥️ Total Devices</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="number">72</div>
+                <div class="label">✅ Online</div>
+            </div>
+            <div class="stat-card yellow">
+                <div class="number">5</div>
+                <div class="label">⚠️ Degraded</div>
+            </div>
+            <div class="stat-card pink">
+                <div class="number">4</div>
+                <div class="label">❌ Offline</div>
+            </div>
+        </div>
+
+        <!-- ENDPOINTS -->
+
+        <!-- 1. Inventory -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">📊</span>
+                <h2>Inventory Management</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">📋 Inventory Summary</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/v1/inventory" target="_blank">http://192.168.0.101:3001/api/v1/inventory</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/v1/inventory">📋 Copy</button>
+                    <button class="toggle-details" data-target="inventory-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="inventory-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>Total Devices</th>
+                            <th>Online</th>
+                            <th>Offline</th>
+                            <th>Degraded</th>
+                            <th>Standby</th>
+                            <th>Uptime</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>85</strong></td>
+                            <td><span class="status-badge online">72</span></td>
+                            <td><span class="status-badge offline">4</span></td>
+                            <td><span class="status-badge degraded">5</span></td>
+                            <td><span class="status-badge standby">4</span></td>
+                            <td>99.87%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. Routers -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🌐</span>
+                <h2>Routers</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 All Routers</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/routers" target="_blank">http://192.168.0.101:3001/api/routers</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/routers">📋 Copy</button>
+                    <button class="toggle-details" data-target="routers-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="routers-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Model</th>
+                            <th>Vendor</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>IP</th>
+                            <th>Uptime</th>
+                            <th>Bandwidth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RTR-001</td>
+                            <td>Cisco ASR 1000-Primary</td>
+                            <td>ASR-1000</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.12.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.1</td>
+                            <td>365d 2h 30m</td>
+                            <td>10 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>RTR-002</td>
+                            <td>Cisco ASR 1000-Backup</td>
+                            <td>ASR-1000</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.12.4</td>
+                            <td><span class="status-badge standby">Standby</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.2</td>
+                            <td>180d 5h 15m</td>
+                            <td>10 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>RTR-003</td>
+                            <td>Cisco ISR 4451-Dhanmondi</td>
+                            <td>ISR-4451</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.9.5</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Dhanmondi Branch</td>
+                            <td>10.1.0.1</td>
+                            <td>120d 8h 45m</td>
+                            <td>1 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>RTR-004</td>
+                            <td>Cisco ISR 4331-Gulshan</td>
+                            <td>ISR-4331</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.9.5</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Gulshan Branch</td>
+                            <td>10.2.0.1</td>
+                            <td>90d 3h 20m</td>
+                            <td>1 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>RTR-005</td>
+                            <td>Cisco ISR 4321-Chittagong</td>
+                            <td>ISR-4321</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.9.5</td>
+                            <td><span class="status-badge degraded">Degraded</span></td>
+                            <td>Chittagong Branch</td>
+                            <td>10.3.0.1</td>
+                            <td>30d 12h 10m</td>
+                            <td>500 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>RTR-006</td>
+                            <td>Cisco ISR 4221-Khulna</td>
+                            <td>ISR-4221</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 16.9.5</td>
+                            <td><span class="status-badge offline">Offline</span></td>
+                            <td>Khulna Branch</td>
+                            <td>10.4.0.1</td>
+                            <td>0d</td>
+                            <td>0 Mbps</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. Switches -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🔌</span>
+                <h2>Switches</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 All Switches</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/switches" target="_blank">http://192.168.0.101:3001/api/switches</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/switches">📋 Copy</button>
+                    <button class="toggle-details" data-target="switches-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="switches-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Model</th>
+                            <th>Vendor</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>IP</th>
+                            <th>Uptime</th>
+                            <th>Ports</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SW-001</td>
+                            <td>Cisco Catalyst 9500-Primary</td>
+                            <td>C9500-48Y4C</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.10</td>
+                            <td>365d 2h 30m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-002</td>
+                            <td>Cisco Catalyst 9500-Backup</td>
+                            <td>C9500-48Y4C</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge standby">Standby</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.11</td>
+                            <td>180d 5h 15m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-003</td>
+                            <td>Cisco Catalyst 9300-1</td>
+                            <td>C9300-48UXM</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.12</td>
+                            <td>200d 8h 20m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-004</td>
+                            <td>Cisco Catalyst 9300-2</td>
+                            <td>C9300-48UXM</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.13</td>
+                            <td>200d 8h 20m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-005</td>
+                            <td>Cisco Catalyst 9200-Floor-1</td>
+                            <td>C9200-48P</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.14</td>
+                            <td>150d 10h 30m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-006</td>
+                            <td>Cisco Catalyst 9200-Floor-2</td>
+                            <td>C9200-48P</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.15</td>
+                            <td>150d 10h 30m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-007</td>
+                            <td>Cisco Catalyst 9200-Floor-3</td>
+                            <td>C9200-48P</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS XE 17.3.4</td>
+                            <td><span class="status-badge degraded">Degraded</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.16</td>
+                            <td>30d 4h 15m</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>SW-008</td>
+                            <td>Cisco Catalyst 2960-X-Khulna</td>
+                            <td>2960-X-48PS</td>
+                            <td>Cisco Systems</td>
+                            <td>IOS 15.2.7</td>
+                            <td><span class="status-badge offline">Offline</span></td>
+                            <td>Khulna Branch</td>
+                            <td>10.4.0.10</td>
+                            <td>0d</td>
+                            <td>48</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. Firewalls -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🔥</span>
+                <h2>Firewalls</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 All Firewalls</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/firewalls" target="_blank">http://192.168.0.101:3001/api/firewalls</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/firewalls">📋 Copy</button>
+                    <button class="toggle-details" data-target="firewalls-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="firewalls-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Model</th>
+                            <th>Vendor</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>IP</th>
+                            <th>Uptime</th>
+                            <th>Throughput</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FW-001</td>
+                            <td>FortiGate-3000D-Primary</td>
+                            <td>FortiGate-3000D</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.2.5</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.254</td>
+                            <td>200d 12h 30m</td>
+                            <td>8.5 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-002</td>
+                            <td>FortiGate-3000D-Backup</td>
+                            <td>FortiGate-3000D</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.2.5</td>
+                            <td><span class="status-badge standby">Standby</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.253</td>
+                            <td>2d 5h 10m</td>
+                            <td>0 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-003</td>
+                            <td>Cisco Firepower 2130</td>
+                            <td>Firepower 2130</td>
+                            <td>Cisco Systems</td>
+                            <td>Firepower 6.6.5</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.252</td>
+                            <td>180d 8h 20m</td>
+                            <td>6.2 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-004</td>
+                            <td>FortiGate-200E-Dhanmondi</td>
+                            <td>FortiGate-200E</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.0.12</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Dhanmondi Branch</td>
+                            <td>10.1.0.254</td>
+                            <td>120d 6h 15m</td>
+                            <td>2.5 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-005</td>
+                            <td>FortiGate-200E-Gulshan</td>
+                            <td>FortiGate-200E</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.0.12</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Gulshan Branch</td>
+                            <td>10.2.0.254</td>
+                            <td>90d 4h 30m</td>
+                            <td>2.5 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-006</td>
+                            <td>FortiGate-100E-Chittagong</td>
+                            <td>FortiGate-100E</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.0.12</td>
+                            <td><span class="status-badge degraded">Degraded</span></td>
+                            <td>Chittagong Branch</td>
+                            <td>10.3.0.254</td>
+                            <td>30d 2h 45m</td>
+                            <td>1 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-007</td>
+                            <td>Palo Alto PA-3250</td>
+                            <td>PA-3250</td>
+                            <td>Palo Alto Networks</td>
+                            <td>PAN-OS 10.2.5</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.251</td>
+                            <td>150d 10h 00m</td>
+                            <td>7.8 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>FW-008</td>
+                            <td>FortiGate-60F-Khulna</td>
+                            <td>FortiGate-60F</td>
+                            <td>Fortinet</td>
+                            <td>FortiOS v7.0.12</td>
+                            <td><span class="status-badge offline">Offline</span></td>
+                            <td>Khulna Branch</td>
+                            <td>10.4.0.254</td>
+                            <td>0d</td>
+                            <td>0 Gbps</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. Servers -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🖥️</span>
+                <h2>Servers</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 All Servers</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/servers" target="_blank">http://192.168.0.101:3001/api/servers</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/servers">📋 Copy</button>
+                    <button class="toggle-details" data-target="servers-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="servers-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Model</th>
+                            <th>Vendor</th>
+                            <th>OS</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>IP</th>
+                            <th>Uptime</th>
+                            <th>CPU Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SRV-001</td>
+                            <td>T24-Core-Primary</td>
+                            <td>Dell PowerEdge R740</td>
+                            <td>Dell Technologies</td>
+                            <td>RHEL 8.6</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.100</td>
+                            <td>180d 12h 30m</td>
+                            <td>45%</td>
+                        </tr>
+                        <tr>
+                            <td>SRV-002</td>
+                            <td>T24-Core-Backup</td>
+                            <td>Dell PowerEdge R740</td>
+                            <td>Dell Technologies</td>
+                            <td>RHEL 8.6</td>
+                            <td><span class="status-badge standby">Standby</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.101</td>
+                            <td>30d 5h 15m</td>
+                            <td>10%</td>
+                        </tr>
+                        <tr>
+                            <td>SRV-003</td>
+                            <td>Oracle-DB-Primary</td>
+                            <td>Oracle Exadata X8-2</td>
+                            <td>Oracle Corporation</td>
+                            <td>Oracle Linux 8.6</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10.0.0.102</td>
+                            <td>180d 12h 30m</td>
+                            <td>55%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. Security Tools -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🔒</span>
+                <h2>Security Tools</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 Security Tools</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/security-tools" target="_blank">http://192.168.0.101:3001/api/security-tools</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/security-tools">📋 Copy</button>
+                    <button class="toggle-details" data-target="security-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="security-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Vendor</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SEC-001</td>
+                            <td>Cisco ISE</td>
+                            <td>NAC</td>
+                            <td>Cisco Systems</td>
+                            <td>3.2</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>250 Users, 350 Endpoints</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-002</td>
+                            <td>Snort IPS</td>
+                            <td>Intrusion Prevention</td>
+                            <td>Cisco Systems</td>
+                            <td>3.0</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>12,000 Rules</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-003</td>
+                            <td>Suricata</td>
+                            <td>IDS/IPS</td>
+                            <td>OISF</td>
+                            <td>6.0.10</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>15,000 Rules</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-004</td>
+                            <td>Splunk SIEM</td>
+                            <td>SIEM</td>
+                            <td>Splunk Inc.</td>
+                            <td>9.0.5</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>100 GB/Day, 365 Days Retention</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-005</td>
+                            <td>QRadar SIEM</td>
+                            <td>SIEM</td>
+                            <td>IBM</td>
+                            <td>7.5.0</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>80 GB/Day, 365 Days Retention</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-006</td>
+                            <td>WAF-CloudFlare</td>
+                            <td>Web Application Firewall</td>
+                            <td>CloudFlare Inc.</td>
+                            <td>Enterprise</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Cloud</td>
+                            <td>15 Gbps Traffic</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-007</td>
+                            <td>CrowdStrike Falcon</td>
+                            <td>EDR</td>
+                            <td>CrowdStrike</td>
+                            <td>6.0.0</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>All Locations</td>
+                            <td>350 Endpoints, NGAV+EDR</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-008</td>
+                            <td>Symantec Endpoint</td>
+                            <td>Anti-Virus</td>
+                            <td>Broadcom</td>
+                            <td>14.3.0</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>All Locations</td>
+                            <td>350 Endpoints, Hourly Updates</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-009</td>
+                            <td>RSA SecurID</td>
+                            <td>MFA</td>
+                            <td>RSA Security</td>
+                            <td>8.0.0</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>All Locations</td>
+                            <td>250 Users, Two-Factor</td>
+                        </tr>
+                        <tr>
+                            <td>SEC-010</td>
+                            <td>Zscaler ZIA</td>
+                            <td>Cloud Security</td>
+                            <td>Zscaler</td>
+                            <td>6.0.0</td>
+                            <td><span class="status-badge degraded">Degraded</span></td>
+                            <td>Cloud</td>
+                            <td>250 Users, 2.5 Gbps</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 7. Network Tools -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">📊</span>
+                <h2>Network Tools</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 Network Tools</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/network-tools" target="_blank">http://192.168.0.101:3001/api/network-tools</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/network-tools">📋 Copy</button>
+                    <button class="toggle-details" data-target="network-tools-details">📋 Details</button>
+                </div>
+            </div>
+            <div id="network-tools-details" class="details-container">
+                <table class="device-details">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Vendor</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MON-001</td>
+                            <td>Zabbix</td>
+                            <td>Network Monitoring</td>
+                            <td>Open Source</td>
+                            <td>6.0.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>85 Devices, 50 Templates</td>
+                        </tr>
+                        <tr>
+                            <td>MON-002</td>
+                            <td>PRTG</td>
+                            <td>Network Monitoring</td>
+                            <td>Paessler</td>
+                            <td>23.1.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>500 Sensors, 85 Devices</td>
+                        </tr>
+                        <tr>
+                            <td>MON-003</td>
+                            <td>SolarWinds</td>
+                            <td>Network Monitoring</td>
+                            <td>SolarWinds</td>
+                            <td>2023.1.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>85 Devices</td>
+                        </tr>
+                        <tr>
+                            <td>MON-004</td>
+                            <td>Nagios Core</td>
+                            <td>Network Monitoring</td>
+                            <td>Open Source</td>
+                            <td>4.4.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>200 Services</td>
+                        </tr>
+                        <tr>
+                            <td>MON-005</td>
+                            <td>Graylog</td>
+                            <td>Log Management</td>
+                            <td>Open Source</td>
+                            <td>5.0.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>50 GB/Day, 90 Days Retention</td>
+                        </tr>
+                        <tr>
+                            <td>MON-006</td>
+                            <td>Elasticsearch</td>
+                            <td>Log Storage</td>
+                            <td>Elastic</td>
+                            <td>8.6.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>10 TB Storage</td>
+                        </tr>
+                        <tr>
+                            <td>MON-007</td>
+                            <td>Kibana</td>
+                            <td>Log Visualization</td>
+                            <td>Elastic</td>
+                            <td>8.6.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>15 Dashboards</td>
+                        </tr>
+                        <tr>
+                            <td>MON-008</td>
+                            <td>Grafana</td>
+                            <td>Dashboard</td>
+                            <td>Open Source</td>
+                            <td>9.3.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>20 Dashboards</td>
+                        </tr>
+                        <tr>
+                            <td>MON-009</td>
+                            <td>Prometheus</td>
+                            <td>Metrics Collection</td>
+                            <td>Open Source</td>
+                            <td>2.42.0</td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>Head Office-Dhaka</td>
+                            <td>5,000 Metrics</td>
+                        </tr>
+                        <tr>
+                            <td>MON-010</td>
+                            <td>Graylog-Secondary</td>
+                            <td>Log Management</td>
+                            <td>Open Source</td>
+                            <td>5.0.0</td>
+                            <td><span class="status-badge offline">Offline</span></td>
+                            <td>DR Site</td>
+                            <td>Server Down</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. VoIP -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">📞</span>
+                <h2>VoIP & Communication</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 VoIP Devices</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/voip" target="_blank">http://192.168.0.101:3001/api/voip</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/voip">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. ATM & POS -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">💳</span>
+                <h2>ATM & POS</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 ATM & POS Devices</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/atm-pos" target="_blank">http://192.168.0.101:3001/api/atm-pos</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/atm-pos">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. VPN -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🔗</span>
+                <h2>VPN & Connectivity</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 VPN Tunnels</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/vpn" target="_blank">http://192.168.0.101:3001/api/vpn</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/vpn">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Branches -->
+        <div class="category">
+            <div class="category-header">
+                <span class="icon">🏢</span>
+                <h2>Branches</h2>
+                <span class="count">1 Endpoint</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="device-name">🔹 All Branches</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/v1/branches" target="_blank">http://192.168.0.101:3001/api/v1/branches</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/v1/branches">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK COPY SECTION -->
+        <div class="category" style="border-color: rgba(251, 191, 36, 0.2);">
+            <div class="category-header">
+                <span class="icon">📋</span>
+                <h2>Quick Copy (All Links)</h2>
+                <span class="count">12 Links</span>
+            </div>
+            <div class="endpoint-list">
+                <div class="endpoint-item" style="background: rgba(251, 191, 36, 0.05);">
+                    <span class="device-name" style="color: #fbbf24;">📋 Inventory Summary</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/v1/inventory" target="_blank">http://192.168.0.101:3001/api/v1/inventory</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/v1/inventory">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(96, 165, 250, 0.05);">
+                    <span class="device-name" style="color: #60a5fa;">🌐 All Routers</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/routers" target="_blank">http://192.168.0.101:3001/api/routers</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/routers">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(96, 165, 250, 0.05);">
+                    <span class="device-name" style="color: #60a5fa;">🔌 All Switches</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/switches" target="_blank">http://192.168.0.101:3001/api/switches</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/switches">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(96, 165, 250, 0.05);">
+                    <span class="device-name" style="color: #60a5fa;">🔥 All Firewalls</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/firewalls" target="_blank">http://192.168.0.101:3001/api/firewalls</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/firewalls">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(167, 139, 250, 0.05);">
+                    <span class="device-name" style="color: #a78bfa;">🖥️ All Servers</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/servers" target="_blank">http://192.168.0.101:3001/api/servers</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/servers">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(167, 139, 250, 0.05);">
+                    <span class="device-name" style="color: #a78bfa;">🗄️ All Databases</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/databases" target="_blank">http://192.168.0.101:3001/api/databases</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/databases">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(244, 114, 182, 0.05);">
+                    <span class="device-name" style="color: #f472b6;">🔒 Security Tools</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/security-tools" target="_blank">http://192.168.0.101:3001/api/security-tools</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/security-tools">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(244, 114, 182, 0.05);">
+                    <span class="device-name" style="color: #f472b6;">📊 Network Tools</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/network-tools" target="_blank">http://192.168.0.101:3001/api/network-tools</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/network-tools">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(251, 146, 60, 0.05);">
+                    <span class="device-name" style="color: #fb923c;">📞 VoIP Devices</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/voip" target="_blank">http://192.168.0.101:3001/api/voip</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/voip">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(251, 146, 60, 0.05);">
+                    <span class="device-name" style="color: #fb923c;">💳 ATM & POS</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/atm-pos" target="_blank">http://192.168.0.101:3001/api/atm-pos</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/atm-pos">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(251, 146, 60, 0.05);">
+                    <span class="device-name" style="color: #fb923c;">🔗 VPN Tunnels</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/vpn" target="_blank">http://192.168.0.101:3001/api/vpn</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/vpn">📋 Copy</button>
+                </div>
+                <div class="endpoint-item" style="background: rgba(251, 146, 60, 0.05);">
+                    <span class="device-name" style="color: #fb923c;">🏢 All Branches</span>
+                    <div class="link-wrapper">
+                        <span class="method">GET</span>
+                        <a href="http://192.168.0.101:3001/api/v1/branches" target="_blank">http://192.168.0.101:3001/api/v1/branches</a>
+                    </div>
+                    <button class="copy-btn" data-url="http://192.168.0.101:3001/api/v1/branches">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>
+                🏦 <strong>Nord Bank</strong> &bull; Mockoon API Simulation &bull;
+                <a href="http://192.168.0.101:3001" target="_blank">http://192.168.0.101:3001</a>
+            </p>
+            <p style="margin-top: 6px; font-size: 13px; color: #475569;">
+                Built with ❤️ for MACBan &bull; Enterprise AI Automation for Banking
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Copy button functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                navigator.clipboard.writeText(url).then(() => {
+                    this.textContent = '✅ Copied!';
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.textContent = '📋 Copy';
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(() => {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = url;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    this.textContent = '✅ Copied!';
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.textContent = '📋 Copy';
+                        this.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        });
+
+        // Toggle details functionality
+        document.querySelectorAll('.toggle-details').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.classList.toggle('show');
+                    this.textContent = target.classList.contains('show') ? '🔽 Hide' : '📋 Details';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

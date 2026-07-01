@@ -1,0 +1,527 @@
+{
+  "uuid": "03457dcd-413d-4366-9de5-59dbeff0b1a3",
+  "lastMigration": 33,
+  "name": "Nord Bank Inventory",
+  "endpointPrefix": "",
+  "latency": 50,
+  "port": 3001,
+  "hostname": "",
+  "routes": [
+    {
+      "uuid": "95034c30-186b-4837-ba43-e6b96d3ce09b",
+      "method": "get",
+      "endpoint": "/api/v1/inventory",
+      "responses": [
+        {
+          "uuid": "df2b6beb-f0ff-4169-af6b-ec7bf5a3bc82",
+          "statusCode": 200,
+          "label": "Complete Inventory Summary",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-07-01T10:30:00Z\",\n  \"summary\": {\n    \"total_devices\": 85,\n    \"online\": 72,\n    \"offline\": 4,\n    \"degraded\": 5,\n    \"standby\": 4,\n    \"uptime\": \"99.87%\"\n  },\n  \"by_type\": {\n    \"routers\": {\"total\": 6, \"online\": 4, \"offline\": 1, \"degraded\": 1},\n    \"switches\": {\"total\": 8, \"online\": 6, \"offline\": 1, \"degraded\": 1},\n    \"firewalls\": {\"total\": 8, \"online\": 7, \"offline\": 0, \"degraded\": 1},\n    \"servers\": {\"total\": 18, \"online\": 15, \"offline\": 0, \"degraded\": 1},\n    \"security_tools\": {\"total\": 10, \"online\": 9, \"offline\": 0, \"degraded\": 1},\n    \"network_tools\": {\"total\": 10, \"online\": 9, \"offline\": 1, \"degraded\": 0},\n    \"voip_devices\": {\"total\": 10, \"online\": 8, \"offline\": 1, \"degraded\": 1},\n    \"atm_pos\": {\"total\": 8, \"online\": 7, \"offline\": 1, \"degraded\": 0},\n    \"vpn_tunnels\": {\"total\": 8, \"online\": 6, \"offline\": 1, \"degraded\": 1},\n    \"databases\": {\"total\": 7, \"online\": 7, \"offline\": 0, \"degraded\": 0}\n  }\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "Complete inventory of all banking devices",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "4b7f9841-842a-4c4c-a13b-73ae7c6875b1",
+      "method": "get",
+      "endpoint": "/api/routers",
+      "responses": [
+        {
+          "uuid": "e717f5e1-3cb3-47e3-b1b4-96d8906208bf",
+          "statusCode": 200,
+          "label": "All Routers",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"routers\": [\n    {\n      \"id\": \"RTR-001\",\n      \"name\": \"Cisco ASR 1000-Primary\",\n      \"type\": \"Core Router\",\n      \"model\": \"ASR-1000\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.1\",\n      \"uptime\": \"365d\",\n      \"redundancy\": \"active\",\n      \"protocols\": [\"OSPF\", \"BGP\", \"MPLS\"],\n      \"bandwidth\": \"10 Gbps\"\n    },\n    {\n      \"id\": \"RTR-002\",\n      \"name\": \"Cisco ASR 1000-Backup\",\n      \"type\": \"Core Router\",\n      \"model\": \"ASR-1000\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"standby\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.2\",\n      \"uptime\": \"180d\",\n      \"redundancy\": \"standby\",\n      \"protocols\": [\"OSPF\", \"BGP\", \"MPLS\"],\n      \"bandwidth\": \"10 Gbps\"\n    },\n    {\n      \"id\": \"RTR-003\",\n      \"name\": \"Cisco ISR 4451\",\n      \"type\": \"Branch Router\",\n      \"model\": \"ISR-4451\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Dhanmondi Branch\",\n      \"ip\": \"10.1.0.1\",\n      \"uptime\": \"120d\",\n      \"redundancy\": \"none\",\n      \"protocols\": [\"OSPF\", \"EIGRP\"],\n      \"bandwidth\": \"1 Gbps\"\n    },\n    {\n      \"id\": \"RTR-004\",\n      \"name\": \"Cisco ISR 4331\",\n      \"type\": \"Branch Router\",\n      \"model\": \"ISR-4331\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Gulshan Branch\",\n      \"ip\": \"10.2.0.1\",\n      \"uptime\": \"90d\",\n      \"redundancy\": \"none\",\n      \"protocols\": [\"OSPF\", \"EIGRP\"],\n      \"bandwidth\": \"1 Gbps\"\n    },\n    {\n      \"id\": \"RTR-005\",\n      \"name\": \"Cisco ISR 4321\",\n      \"type\": \"Branch Router\",\n      \"model\": \"ISR-4321\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"degraded\",\n      \"location\": \"Chittagong Branch\",\n      \"ip\": \"10.3.0.1\",\n      \"uptime\": \"30d\",\n      \"redundancy\": \"none\",\n      \"protocols\": [\"OSPF\"],\n      \"bandwidth\": \"500 Mbps\",\n      \"issues\": [\"High CPU\", \"Packet loss 5%\"]\n    },\n    {\n      \"id\": \"RTR-006\",\n      \"name\": \"Cisco ISR 4221\",\n      \"type\": \"Branch Router\",\n      \"model\": \"ISR-4221\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"offline\",\n      \"location\": \"Khulna Branch\",\n      \"ip\": \"10.4.0.1\",\n      \"uptime\": \"0d\",\n      \"redundancy\": \"none\",\n      \"protocols\": [],\n      \"bandwidth\": \"0 Mbps\",\n      \"issues\": [\"ISP failure\", \"No connectivity\"]\n    }\n  ],\n  \"total\": 6,\n  \"online\": 4,\n  \"offline\": 1,\n  \"degraded\": 1,\n  \"standby\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all routers in the bank network",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "38192940-7080-4977-86a4-8389dfa2e64c",
+      "method": "get",
+      "endpoint": "/api/switches",
+      "responses": [
+        {
+          "uuid": "c899a5ca-d517-41f1-8a6b-e42d6cc17d4c",
+          "statusCode": 200,
+          "label": "All Switches",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"switches\": [\n    {\n      \"id\": \"SW-001\",\n      \"name\": \"Cisco Catalyst 9500-Primary\",\n      \"type\": \"Core Switch\",\n      \"model\": \"C9500-48Y4C\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.10\",\n      \"uptime\": \"365d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"10\", \"20\", \"30\", \"40\", \"50\"]\n    },\n    {\n      \"id\": \"SW-002\",\n      \"name\": \"Cisco Catalyst 9500-Backup\",\n      \"type\": \"Core Switch\",\n      \"model\": \"C9500-48Y4C\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"standby\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.11\",\n      \"uptime\": \"180d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"10\", \"20\", \"30\", \"40\", \"50\"]\n    },\n    {\n      \"id\": \"SW-003\",\n      \"name\": \"Cisco Catalyst 9300-1\",\n      \"type\": \"Distribution Switch\",\n      \"model\": \"C9300-48UXM\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.12\",\n      \"uptime\": \"200d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"20\", \"30\", \"40\"]\n    },\n    {\n      \"id\": \"SW-004\",\n      \"name\": \"Cisco Catalyst 9300-2\",\n      \"type\": \"Distribution Switch\",\n      \"model\": \"C9300-48UXM\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.13\",\n      \"uptime\": \"200d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"20\", \"30\", \"40\"]\n    },\n    {\n      \"id\": \"SW-005\",\n      \"name\": \"Cisco Catalyst 9200-Floor-1\",\n      \"type\": \"Access Switch\",\n      \"model\": \"C9200-48P\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.14\",\n      \"uptime\": \"150d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"40\", \"50\"]\n    },\n    {\n      \"id\": \"SW-006\",\n      \"name\": \"Cisco Catalyst 9200-Floor-2\",\n      \"type\": \"Access Switch\",\n      \"model\": \"C9200-48P\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.15\",\n      \"uptime\": \"150d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"40\", \"50\"]\n    },\n    {\n      \"id\": \"SW-007\",\n      \"name\": \"Cisco Catalyst 9200-Floor-3\",\n      \"type\": \"Access Switch\",\n      \"model\": \"C9200-48P\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"degraded\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.16\",\n      \"uptime\": \"30d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [\"40\"],\n      \"issues\": [\"2 ports down\", \"PoE failure on port 12\"]\n    },\n    {\n      \"id\": \"SW-008\",\n      \"name\": \"Cisco Catalyst 2960-X\",\n      \"type\": \"Access Switch\",\n      \"model\": \"2960-X-48PS\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"offline\",\n      \"location\": \"Khulna Branch\",\n      \"ip\": \"10.4.0.10\",\n      \"uptime\": \"0d\",\n      \"ports\": 48,\n      \"poe\": \"enabled\",\n      \"vlans\": [],\n      \"issues\": [\"Power failure\"]\n    }\n  ],\n  \"total\": 8,\n  \"online\": 6,\n  \"offline\": 1,\n  \"degraded\": 1,\n  \"standby\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all switches in the bank network",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "7c02a678-f355-44e1-ad80-75484e0d96b9",
+      "method": "get",
+      "endpoint": "/api/firewalls",
+      "responses": [
+        {
+          "uuid": "6c2e53e9-3b54-4806-9193-67c472c3c39e",
+          "statusCode": 200,
+          "label": "All Firewalls",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"firewalls\": [\n    {\n      \"id\": \"FW-001\",\n      \"name\": \"FortiGate-3000D-Primary\",\n      \"type\": \"Next-Gen Firewall\",\n      \"model\": \"FortiGate-3000D\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.254\",\n      \"uptime\": \"200d\",\n      \"sessions\": 12500,\n      \"throughput\": \"8.5 Gbps\",\n      \"features\": [\"IPS\", \"IDS\", \"SSL Inspection\", \"VPN\"]\n    },\n    {\n      \"id\": \"FW-002\",\n      \"name\": \"FortiGate-3000D-Backup\",\n      \"type\": \"Next-Gen Firewall\",\n      \"model\": \"FortiGate-3000D\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"standby\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.253\",\n      \"uptime\": \"2d\",\n      \"sessions\": 0,\n      \"throughput\": \"0 Gbps\",\n      \"features\": [\"IPS\", \"IDS\", \"SSL Inspection\", \"VPN\"]\n    },\n    {\n      \"id\": \"FW-003\",\n      \"name\": \"Cisco Firepower 2130\",\n      \"type\": \"IPS/IDS\",\n      \"model\": \"Firepower 2130\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.252\",\n      \"uptime\": \"180d\",\n      \"sessions\": 8500,\n      \"throughput\": \"6.2 Gbps\",\n      \"features\": [\"IPS\", \"IDS\", \"Malware Detection\"]\n    },\n    {\n      \"id\": \"FW-004\",\n      \"name\": \"FortiGate-200E-Dhanmondi\",\n      \"type\": \"Branch Firewall\",\n      \"model\": \"FortiGate-200E\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"active\",\n      \"location\": \"Dhanmondi Branch\",\n      \"ip\": \"10.1.0.254\",\n      \"uptime\": \"120d\",\n      \"sessions\": 3500,\n      \"throughput\": \"2.5 Gbps\",\n      \"features\": [\"IPS\", \"VPN\"]\n    },\n    {\n      \"id\": \"FW-005\",\n      \"name\": \"FortiGate-200E-Gulshan\",\n      \"type\": \"Branch Firewall\",\n      \"model\": \"FortiGate-200E\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"active\",\n      \"location\": \"Gulshan Branch\",\n      \"ip\": \"10.2.0.254\",\n      \"uptime\": \"90d\",\n      \"sessions\": 2800,\n      \"throughput\": \"2.5 Gbps\",\n      \"features\": [\"IPS\", \"VPN\"]\n    },\n    {\n      \"id\": \"FW-006\",\n      \"name\": \"FortiGate-100E-Chittagong\",\n      \"type\": \"Branch Firewall\",\n      \"model\": \"FortiGate-100E\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"degraded\",\n      \"location\": \"Chittagong Branch\",\n      \"ip\": \"10.3.0.254\",\n      \"uptime\": \"30d\",\n      \"sessions\": 1200,\n      \"throughput\": \"1 Gbps\",\n      \"features\": [\"IPS\", \"VPN\"],\n      \"issues\": [\"High memory usage\", \"Slow throughput\"]\n    },\n    {\n      \"id\": \"FW-007\",\n      \"name\": \"Palo Alto PA-3250\",\n      \"type\": \"Next-Gen Firewall\",\n      \"model\": \"PA-3250\",\n      \"vendor\": \"Palo Alto\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.251\",\n      \"uptime\": \"150d\",\n      \"sessions\": 10500,\n      \"throughput\": \"7.8 Gbps\",\n      \"features\": [\"IPS\", \"IDS\", \"WildFire\", \"SSL Decryption\"]\n    },\n    {\n      \"id\": \"FW-008\",\n      \"name\": \"FortiGate-60F-Khulna\",\n      \"type\": \"Branch Firewall\",\n      \"model\": \"FortiGate-60F\",\n      \"vendor\": \"Fortinet\",\n      \"status\": \"offline\",\n      \"location\": \"Khulna Branch\",\n      \"ip\": \"10.4.0.254\",\n      \"uptime\": \"0d\",\n      \"sessions\": 0,\n      \"throughput\": \"0 Gbps\",\n      \"features\": [],\n      \"issues\": [\"Power off\"]\n    }\n  ],\n  \"total\": 8,\n  \"online\": 7,\n  \"offline\": 1,\n  \"degraded\": 1,\n  \"standby\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all firewalls in the bank network",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "ee90fc54-a8ca-43c9-a1e5-fcf374cd3709",
+      "method": "get",
+      "endpoint": "/api/servers",
+      "responses": [
+        {
+          "uuid": "9cf0b630-14d3-4e6b-b081-8a1cdc403dd2",
+          "statusCode": 200,
+          "label": "All Servers",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"servers\": [\n    {\n      \"id\": \"SRV-001\",\n      \"name\": \"T24-Core-Primary\",\n      \"type\": \"Core Banking Server\",\n      \"model\": \"Dell PowerEdge R740\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.100\",\n      \"uptime\": \"180d\",\n      \"cpu\": \"45%\",\n      \"memory\": \"62%\",\n      \"storage\": \"2.5 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"T24 Temenos R19\"\n    },\n    {\n      \"id\": \"SRV-002\",\n      \"name\": \"T24-Core-Backup\",\n      \"type\": \"Core Banking Server\",\n      \"model\": \"Dell PowerEdge R740\",\n      \"vendor\": \"Dell\",\n      \"status\": \"standby\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.101\",\n      \"uptime\": \"30d\",\n      \"cpu\": \"10%\",\n      \"memory\": \"20%\",\n      \"storage\": \"2.5 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"T24 Temenos R19\"\n    },\n    {\n      \"id\": \"SRV-003\",\n      \"name\": \"Oracle-DB-Primary\",\n      \"type\": \"Database Server\",\n      \"model\": \"Oracle Exadata X8-2\",\n      \"vendor\": \"Oracle\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.102\",\n      \"uptime\": \"180d\",\n      \"cpu\": \"55%\",\n      \"memory\": \"78%\",\n      \"storage\": \"10 TB\",\n      \"os\": \"Oracle Linux\",\n      \"database\": \"Oracle 19c\"\n    },\n    {\n      \"id\": \"SRV-004\",\n      \"name\": \"Oracle-DB-Secondary\",\n      \"type\": \"Database Server\",\n      \"model\": \"Oracle Exadata X8-2\",\n      \"vendor\": \"Oracle\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.103\",\n      \"uptime\": \"180d\",\n      \"cpu\": \"35%\",\n      \"memory\": \"50%\",\n      \"storage\": \"10 TB\",\n      \"os\": \"Oracle Linux\",\n      \"database\": \"Oracle 19c (Standby)\"\n    },\n    {\n      \"id\": \"SRV-005\",\n      \"name\": \"PostgreSQL-Reporting\",\n      \"type\": \"Reporting Database\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.104\",\n      \"uptime\": \"90d\",\n      \"cpu\": \"30%\",\n      \"memory\": \"45%\",\n      \"storage\": \"5 TB\",\n      \"os\": \"Ubuntu 22.04\",\n      \"database\": \"PostgreSQL 15\"\n    },\n    {\n      \"id\": \"SRV-006\",\n      \"name\": \"App-Server-1\",\n      \"type\": \"Application Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.105\",\n      \"uptime\": \"120d\",\n      \"cpu\": \"40%\",\n      \"memory\": \"55%\",\n      \"storage\": \"1 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"Apache Tomcat\"\n    },\n    {\n      \"id\": \"SRV-007\",\n      \"name\": \"App-Server-2\",\n      \"type\": \"Application Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.106\",\n      \"uptime\": \"120d\",\n      \"cpu\": \"35%\",\n      \"memory\": \"48%\",\n      \"storage\": \"1 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"Apache Tomcat\"\n    },\n    {\n      \"id\": \"SRV-008\",\n      \"name\": \"Splunk-SIEM\",\n      \"type\": \"SIEM Server\",\n      \"model\": \"Dell PowerEdge R740\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.107\",\n      \"uptime\": \"200d\",\n      \"cpu\": \"60%\",\n      \"memory\": \"72%\",\n      \"storage\": \"20 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"Splunk Enterprise\"\n    },\n    {\n      \"id\": \"SRV-009\",\n      \"name\": \"Active-Directory\",\n      \"type\": \"Domain Controller\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.108\",\n      \"uptime\": \"365d\",\n      \"cpu\": \"25%\",\n      \"memory\": \"38%\",\n      \"storage\": \"500 GB\",\n      \"os\": \"Windows Server 2022\",\n      \"users\": 250\n    },\n    {\n      \"id\": \"SRV-010\",\n      \"name\": \"DNS-Server\",\n      \"type\": \"DNS Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.109\",\n      \"uptime\": \"365d\",\n      \"cpu\": \"15%\",\n      \"memory\": \"25%\",\n      \"storage\": \"100 GB\",\n      \"os\": \"Windows Server 2022\"\n    },\n    {\n      \"id\": \"SRV-011\",\n      \"name\": \"DHCP-Server\",\n      \"type\": \"DHCP Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.110\",\n      \"uptime\": \"365d\",\n      \"cpu\": \"10%\",\n      \"memory\": \"20%\",\n      \"storage\": \"50 GB\",\n      \"os\": \"Windows Server 2022\"\n    },\n    {\n      \"id\": \"SRV-012\",\n      \"name\": \"Email-Server\",\n      \"type\": \"Exchange Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.111\",\n      \"uptime\": \"180d\",\n      \"cpu\": \"35%\",\n      \"memory\": \"50%\",\n      \"storage\": \"2 TB\",\n      \"os\": \"Windows Server 2022\",\n      \"users\": 250\n    },\n    {\n      \"id\": \"SRV-013\",\n      \"name\": \"Web-Server\",\n      \"type\": \"Web Server\",\n      \"model\": \"Dell PowerEdge R640\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"DMZ\",\n      \"ip\": \"203.0.113.10\",\n      \"uptime\": \"150d\",\n      \"cpu\": \"30%\",\n      \"memory\": \"42%\",\n      \"storage\": \"500 GB\",\n      \"os\": \"Ubuntu 22.04\",\n      \"application\": \"Nginx\"\n    },\n    {\n      \"id\": \"SRV-014\",\n      \"name\": \"VMware-ESXi-1\",\n      \"type\": \"Virtualization Host\",\n      \"model\": \"Dell PowerEdge R740\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.112\",\n      \"uptime\": \"365d\",\n      \"cpu\": \"55%\",\n      \"memory\": \"68%\",\n      \"storage\": \"10 TB\",\n      \"os\": \"VMware ESXi 7.0\",\n      \"vms\": 25\n    },\n    {\n      \"id\": \"SRV-015\",\n      \"name\": \"VMware-ESXi-2\",\n      \"type\": \"Virtualization Host\",\n      \"model\": \"Dell PowerEdge R740\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.113\",\n      \"uptime\": \"365d\",\n      \"cpu\": \"45%\",\n      \"memory\": \"58%\",\n      \"storage\": \"10 TB\",\n      \"os\": \"VMware ESXi 7.0\",\n      \"vms\": 22\n    },\n    {\n      \"id\": \"SRV-016\",\n      \"name\": \"Backup-Server\",\n      \"type\": \"Backup Server\",\n      \"model\": \"Dell PowerEdge R740xd\",\n      \"vendor\": \"Dell\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.114\",\n      \"uptime\": \"180d\",\n      \"cpu\": \"20%\",\n      \"memory\": \"35%\",\n      \"storage\": \"50 TB\",\n      \"os\": \"Red Hat Linux\",\n      \"application\": \"Veeam Backup\"\n    },\n    {\n      \"id\": \"SRV-017\",\n      \"name\": \"SAN-Storage-Primary\",\n      \"type\": \"Storage Server\",\n      \"model\": \"Dell EMC Unity 880F\",\n      \"vendor\": \"Dell EMC\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.115\",\n      \"uptime\": \"365d\",\n      \"total\": \"50 TB\",\n      \"used\": \"32 TB\",\n      \"available\": \"18 TB\",\n      \"type\": \"All-Flash SAN\"\n    },\n    {\n      \"id\": \"SRV-018\",\n      \"name\": \"SAN-Storage-Backup\",\n      \"type\": \"Storage Server\",\n      \"model\": \"Dell EMC Unity 680F\",\n      \"vendor\": \"Dell EMC\",\n      \"status\": \"degraded\",\n      \"location\": \"Head Office\",\n      \"ip\": \"10.0.0.116\",\n      \"uptime\": \"180d\",\n      \"total\": \"30 TB\",\n      \"used\": \"18 TB\",\n      \"available\": \"12 TB\",\n      \"type\": \"All-Flash SAN\",\n      \"issues\": [\"Disk error on bay 5\", \"Slow I/O\"]\n    }\n  ],\n  \"total\": 18,\n  \"online\": 15,\n  \"offline\": 0,\n  \"degraded\": 1,\n  \"standby\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all servers in the bank infrastructure",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "571c5f8f-5672-46fc-aa89-1b96cc6259bb",
+      "method": "get",
+      "endpoint": "/api/security-tools",
+      "responses": [
+        {
+          "uuid": "688f4aa3-af54-477b-b3cc-896e4df697dc",
+          "statusCode": 200,
+          "label": "All Security Tools",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"security_tools\": [\n    {\n      \"id\": \"SEC-001\",\n      \"name\": \"Cisco ISE\",\n      \"type\": \"NAC\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"version\": \"3.2\",\n      \"users\": 250\n    },\n    {\n      \"id\": \"SEC-002\",\n      \"name\": \"Snort IPS\",\n      \"type\": \"Intrusion Prevention\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"version\": \"3.0\",\n      \"rules\": 12000\n    },\n    {\n      \"id\": \"SEC-003\",\n      \"name\": \"Suricata\",\n      \"type\": \"IDS/IPS\",\n      \"vendor\": \"OISF\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"version\": \"6.0.10\",\n      \"rules\": 15000\n    },\n    {\n      \"id\": \"SEC-004\",\n      \"name\": \"Splunk SIEM\",\n      \"type\": \"SIEM\",\n      \"vendor\": \"Splunk\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"version\": \"9.0\",\n      \"logs_per_day\": \"100 GB\"\n    },\n    {\n      \"id\": \"SEC-005\",\n      \"name\": \"QRadar SIEM\",\n      \"type\": \"SIEM\",\n      \"vendor\": \"IBM\",\n      \"status\": \"active\",\n      \"location\": \"Head Office\",\n      \"version\": \"7.5\",\n      \"logs_per_day\": \"80 GB\"\n    },\n    {\n      \"id\": \"SEC-006\",\n      \"name\": \"WAF-CloudFlare\",\n      \"type\": \"Web Application Firewall\",\n      \"vendor\": \"CloudFlare\",\n      \"status\": \"active\",\n      \"location\": \"Cloud\",\n      \"version\": \"Enterprise\",\n      \"rules\": 5000\n    },\n    {\n      \"id\": \"SEC-007\",\n      \"name\": \"CrowdStrike Falcon\",\n      \"type\": \"EDR\",\n      \"vendor\": \"CrowdStrike\",\n      \"status\": \"active\",\n      \"location\": \"All\",\n      \"version\": \"6.0\",\n      \"endpoints\": 350\n    },\n    {\n      \"id\": \"SEC-008\",\n      \"name\": \"Symantec Endpoint\",\n      \"type\": \"Anti-Virus\",\n      \"vendor\": \"Broadcom\",\n      \"status\": \"active\",\n      \"location\": \"All\",\n      \"version\": \"14.3\",\n      \"endpoints\": 350\n    },\n    {\n      \"id\": \"SEC-009\",\n      \"name\": \"RSA SecurID\",\n      \"type\": \"MFA\",\n      \"vendor\": \"RSA\",\n      \"status\": \"active\",\n      \"location\": \"All\",\n      \"version\": \"8.0\",\n      \"users\": 250\n    },\n    {\n      \"id\": \"SEC-010\",\n      \"name\": \"Zscaler ZIA\",\n      \"type\": \"Cloud Security\",\n      \"vendor\": \"Zscaler\",\n      \"status\": \"degraded\",\n      \"location\": \"Cloud\",\n      \"version\": \"6.0\",\n      \"users\": 250,\n      \"issues\": [\"Slow internet detection\", \"Some users not proxied\"]\n    }\n  ],\n  \"total\": 10,\n  \"online\": 9,\n  \"offline\": 0,\n  \"degraded\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all security tools in the bank",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "15172690-626e-4f49-be73-945f994f5bed",
+      "method": "get",
+      "endpoint": "/api/network-tools",
+      "responses": [
+        {
+          "uuid": "92a8fac7-7afe-4bef-a4d5-fe8797e1f57d",
+          "statusCode": 200,
+          "label": "All Network Tools",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"network_tools\": [\n    {\n      \"id\": \"MON-001\",\n      \"name\": \"Zabbix\",\n      \"type\": \"Network Monitoring\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"6.0\",\n      \"devices\": 85\n    },\n    {\n      \"id\": \"MON-002\",\n      \"name\": \"PRTG\",\n      \"type\": \"Network Monitoring\",\n      \"vendor\": \"Paessler\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"23.1\",\n      \"sensors\": 500\n    },\n    {\n      \"id\": \"MON-003\",\n      \"name\": \"SolarWinds\",\n      \"type\": \"Network Monitoring\",\n      \"vendor\": \"SolarWinds\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"2023.1\",\n      \"devices\": 85\n    },\n    {\n      \"id\": \"MON-004\",\n      \"name\": \"Nagios Core\",\n      \"type\": \"Network Monitoring\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"4.4\",\n      \"services\": 200\n    },\n    {\n      \"id\": \"MON-005\",\n      \"name\": \"Graylog\",\n      \"type\": \"Log Management\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"5.0\",\n      \"logs_per_day\": \"50 GB\"\n    },\n    {\n      \"id\": \"MON-006\",\n      \"name\": \"Elasticsearch\",\n      \"type\": \"Log Storage\",\n      \"vendor\": \"Elastic\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"8.6\",\n      \"storage\": \"10 TB\"\n    },\n    {\n      \"id\": \"MON-007\",\n      \"name\": \"Kibana\",\n      \"type\": \"Log Visualization\",\n      \"vendor\": \"Elastic\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"8.6\",\n      \"dashboards\": 15\n    },\n    {\n      \"id\": \"MON-008\",\n      \"name\": \"Grafana\",\n      \"type\": \"Dashboard\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"9.3\",\n      \"dashboards\": 20\n    },\n    {\n      \"id\": \"MON-009\",\n      \"name\": \"Prometheus\",\n      \"type\": \"Metrics Collection\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"2.42\",\n      \"metrics\": 5000\n    },\n    {\n      \"id\": \"MON-010\",\n      \"name\": \"Graylog-Secondary\",\n      \"type\": \"Log Management\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"offline\",\n      \"location\": \"DR Site\",\n      \"version\": \"5.0\",\n      \"logs_per_day\": \"0 GB\",\n      \"issues\": [\"Server down\"]\n    }\n  ],\n  \"total\": 10,\n  \"online\": 9,\n  \"offline\": 1,\n  \"degraded\": 0\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all network monitoring tools",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "3defe57a-ec84-4ce8-8679-9a31669697fd",
+      "method": "get",
+      "endpoint": "/api/voip",
+      "responses": [
+        {
+          "uuid": "4ba1908e-6154-41f7-bc13-e809209bc8b6",
+          "statusCode": 200,
+          "label": "All VoIP Devices",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"voip_devices\": [\n    {\n      \"id\": \"VOIP-001\",\n      \"name\": \"Cisco CUCM\",\n      \"type\": \"Call Manager\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"12.5\",\n      \"extensions\": 350\n    },\n    {\n      \"id\": \"VOIP-002\",\n      \"name\": \"Cisco Unity\",\n      \"type\": \"Voicemail Server\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"12.5\",\n      \"mailboxes\": 350\n    },\n    {\n      \"id\": \"VOIP-003\",\n      \"name\": \"Cisco IP Phone 8845\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"model\": \"8845\",\n      \"mac\": \"AA:BB:CC:00:00:01\"\n    },\n    {\n      \"id\": \"VOIP-004\",\n      \"name\": \"Cisco IP Phone 7841\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Dhanmondi\",\n      \"model\": \"7841\",\n      \"mac\": \"AA:BB:CC:00:00:02\"\n    },\n    {\n      \"id\": \"VOIP-005\",\n      \"name\": \"Yealink T46S\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Yealink\",\n      \"status\": \"online\",\n      \"location\": \"Gulshan\",\n      \"model\": \"T46S\",\n      \"mac\": \"AA:BB:CC:00:00:03\"\n    },\n    {\n      \"id\": \"VOIP-006\",\n      \"name\": \"Yealink T42S\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Yealink\",\n      \"status\": \"online\",\n      \"location\": \"Chittagong\",\n      \"model\": \"T42S\",\n      \"mac\": \"AA:BB:CC:00:00:04\"\n    },\n    {\n      \"id\": \"VOIP-007\",\n      \"name\": \"Asterisk PBX\",\n      \"type\": \"Open Source PBX\",\n      \"vendor\": \"Open Source\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"version\": \"18.12\",\n      \"extensions\": 50\n    },\n    {\n      \"id\": \"VOIP-008\",\n      \"name\": \"Cisco IP Phone 8845\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"degraded\",\n      \"location\": \"Khulna\",\n      \"model\": \"8845\",\n      \"mac\": \"AA:BB:CC:00:00:05\",\n      \"issues\": [\"Audio issues\", \"Firmware outdated\"]\n    },\n    {\n      \"id\": \"VOIP-009\",\n      \"name\": \"Yealink T42S\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Yealink\",\n      \"status\": \"offline\",\n      \"location\": \"Khulna\",\n      \"model\": \"T42S\",\n      \"mac\": \"AA:BB:CC:00:00:06\",\n      \"issues\": [\"No power\"]\n    },\n    {\n      \"id\": \"VOIP-010\",\n      \"name\": \"Cisco IP Phone 7841\",\n      \"type\": \"IP Phone\",\n      \"vendor\": \"Cisco\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"model\": \"7841\",\n      \"mac\": \"AA:BB:CC:00:00:07\"\n    }\n  ],\n  \"total\": 10,\n  \"online\": 8,\n  \"offline\": 1,\n  \"degraded\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all VoIP devices",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "6c2e7dbf-3894-463c-b7a5-541a0d14fef7",
+      "method": "get",
+      "endpoint": "/api/atm-pos",
+      "responses": [
+        {
+          "uuid": "56bcbef7-78d5-4209-9c54-c9519c2f67ea",
+          "statusCode": 200,
+          "label": "All ATM & POS Devices",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"atm_pos\": [\n    {\n      \"id\": \"ATM-001\",\n      \"name\": \"ATM-Dhanmondi-01\",\n      \"type\": \"ATM\",\n      \"vendor\": \"NCR\",\n      \"model\": \"NCR SelfServ 84\",\n      \"status\": \"online\",\n      \"location\": \"Dhanmondi\",\n      \"ip\": \"10.1.0.200\",\n      \"cash\": \"2.5M BDT\"\n    },\n    {\n      \"id\": \"ATM-002\",\n      \"name\": \"ATM-Gulshan-01\",\n      \"type\": \"ATM\",\n      \"vendor\": \"NCR\",\n      \"model\": \"NCR SelfServ 84\",\n      \"status\": \"online\",\n      \"location\": \"Gulshan\",\n      \"ip\": \"10.2.0.200\",\n      \"cash\": \"2.0M BDT\"\n    },\n    {\n      \"id\": \"ATM-003\",\n      \"name\": \"ATM-Chittagong-01\",\n      \"type\": \"ATM\",\n      \"vendor\": \"Diebold\",\n      \"model\": \"Diebold 5500\",\n      \"status\": \"online\",\n      \"location\": \"Chittagong\",\n      \"ip\": \"10.3.0.200\",\n      \"cash\": \"1.5M BDT\"\n    },\n    {\n      \"id\": \"ATM-004\",\n      \"name\": \"ATM-Khulna-01\",\n      \"type\": \"ATM\",\n      \"vendor\": \"NCR\",\n      \"model\": \"NCR SelfServ 84\",\n      \"status\": \"offline\",\n      \"location\": \"Khulna\",\n      \"ip\": \"10.4.0.200\",\n      \"cash\": \"0 BDT\",\n      \"issues\": [\"Network down\"]\n    },\n    {\n      \"id\": \"POS-001\",\n      \"name\": \"POS-Dhanmondi-01\",\n      \"type\": \"POS\",\n      \"vendor\": \"Verifone\",\n      \"model\": \"Verifone VX 820\",\n      \"status\": \"online\",\n      \"location\": \"Dhanmondi\"\n    },\n    {\n      \"id\": \"POS-002\",\n      \"name\": \"POS-Dhanmondi-02\",\n      \"type\": \"POS\",\n      \"vendor\": \"Verifone\",\n      \"model\": \"Verifone VX 820\",\n      \"status\": \"online\",\n      \"location\": \"Dhanmondi\"\n    },\n    {\n      \"id\": \"POS-003\",\n      \"name\": \"POS-Gulshan-01\",\n      \"type\": \"POS\",\n      \"vendor\": \"Verifone\",\n      \"model\": \"Verifone VX 820\",\n      \"status\": \"online\",\n      \"location\": \"Gulshan\"\n    },\n    {\n      \"id\": \"POS-004\",\n      \"name\": \"POS-Chittagong-01\",\n      \"type\": \"POS\",\n      \"vendor\": \"Verifone\",\n      \"model\": \"Verifone VX 820\",\n      \"status\": \"online\",\n      \"location\": \"Chittagong\"\n    }\n  ],\n  \"total\": 8,\n  \"online\": 7,\n  \"offline\": 1,\n  \"degraded\": 0\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all ATM and POS devices",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "074c5869-095a-4f72-92a1-10c2e79309bd",
+      "method": "get",
+      "endpoint": "/api/vpn",
+      "responses": [
+        {
+          "uuid": "592a9c1c-e1c3-4552-a307-16e37e2463f2",
+          "statusCode": 200,
+          "label": "All VPN Tunnels",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"vpn_tunnels\": [\n    {\n      \"id\": \"VPN-001\",\n      \"name\": \"HO-Dhanmondi\",\n      \"type\": \"Site-to-Site IPSec\",\n      \"status\": \"up\",\n      \"location\": \"Head Office to Dhanmondi\",\n      \"uptime\": \"120d\",\n      \"bandwidth\": \"1 Gbps\",\n      \"encryption\": \"AES-256\"\n    },\n    {\n      \"id\": \"VPN-002\",\n      \"name\": \"HO-Gulshan\",\n      \"type\": \"Site-to-Site IPSec\",\n      \"status\": \"up\",\n      \"location\": \"Head Office to Gulshan\",\n      \"uptime\": \"115d\",\n      \"bandwidth\": \"1 Gbps\",\n      \"encryption\": \"AES-256\"\n    },\n    {\n      \"id\": \"VPN-003\",\n      \"name\": \"HO-Chittagong\",\n      \"type\": \"Site-to-Site IPSec\",\n      \"status\": \"degraded\",\n      \"location\": \"Head Office to Chittagong\",\n      \"uptime\": \"15d\",\n      \"bandwidth\": \"500 Mbps\",\n      \"encryption\": \"AES-256\",\n      \"issues\": [\"High packet loss\", \"Reconnecting\"]\n    },\n    {\n      \"id\": \"VPN-004\",\n      \"name\": \"HO-Khulna\",\n      \"type\": \"Site-to-Site IPSec\",\n      \"status\": \"down\",\n      \"location\": \"Head Office to Khulna\",\n      \"uptime\": \"0d\",\n      \"bandwidth\": \"0 Mbps\",\n      \"encryption\": \"AES-256\",\n      \"issues\": [\"Tunnel down\"]\n    },\n    {\n      \"id\": \"VPN-005\",\n      \"name\": \"Remote-Access-SSL\",\n      \"type\": \"SSL VPN\",\n      \"status\": \"up\",\n      \"location\": \"Remote Users\",\n      \"uptime\": \"90d\",\n      \"users\": 15,\n      \"encryption\": \"TLS 1.3\"\n    },\n    {\n      \"id\": \"VPN-006\",\n      \"name\": \"Partner-Bank\",\n      \"type\": \"DMVPN\",\n      \"status\": \"up\",\n      \"location\": \"Partner Network\",\n      \"uptime\": \"60d\",\n      \"bandwidth\": \"500 Mbps\",\n      \"encryption\": \"AES-256\"\n    },\n    {\n      \"id\": \"VPN-007\",\n      \"name\": \"DR-Site\",\n      \"type\": \"Site-to-Site IPSec\",\n      \"status\": \"up\",\n      \"location\": \"DR Site\",\n      \"uptime\": \"30d\",\n      \"bandwidth\": \"5 Gbps\",\n      \"encryption\": \"AES-256\"\n    },\n    {\n      \"id\": \"VPN-008\",\n      \"name\": \"Cloud-Connect\",\n      \"type\": \"IPSec\",\n      \"status\": \"up\",\n      \"location\": \"AWS/Azure\",\n      \"uptime\": \"120d\",\n      \"bandwidth\": \"10 Gbps\",\n      \"encryption\": \"AES-256\"\n    }\n  ],\n  \"total\": 8,\n  \"online\": 6,\n  \"offline\": 1,\n  \"degraded\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all VPN tunnels",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "d03e4d9e-300f-4ce1-807f-ae432e44fef3",
+      "method": "get",
+      "endpoint": "/api/databases",
+      "responses": [
+        {
+          "uuid": "76cc0fb0-4bbb-41a7-a570-5c549beef554",
+          "statusCode": 200,
+          "label": "All Databases",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"databases\": [\n    {\n      \"id\": \"DB-001\",\n      \"name\": \"Core-DB\",\n      \"type\": \"Oracle\",\n      \"version\": \"19c\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"5 TB\",\n      \"tables\": 250\n    },\n    {\n      \"id\": \"DB-002\",\n      \"name\": \"Transaction-DB\",\n      \"type\": \"PostgreSQL\",\n      \"version\": \"15\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"2 TB\",\n      \"tables\": 100\n    },\n    {\n      \"id\": \"DB-003\",\n      \"name\": \"Customer-DB\",\n      \"type\": \"MySQL\",\n      \"version\": \"8.0\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"1.5 TB\",\n      \"tables\": 80\n    },\n    {\n      \"id\": \"DB-004\",\n      \"name\": \"Security-DB\",\n      \"type\": \"Elasticsearch\",\n      \"version\": \"8.6\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"10 TB\",\n      \"indices\": 50\n    },\n    {\n      \"id\": \"DB-005\",\n      \"name\": \"Audit-DB\",\n      \"type\": \"MongoDB\",\n      \"version\": \"6.0\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"3 TB\",\n      \"collections\": 30\n    },\n    {\n      \"id\": \"DB-006\",\n      \"name\": \"Reporting-DB\",\n      \"type\": \"SQL Server\",\n      \"version\": \"2022\",\n      \"status\": \"online\",\n      \"location\": \"Head Office\",\n      \"size\": \"2.5 TB\",\n      \"tables\": 150\n    },\n    {\n      \"id\": \"DB-007\",\n      \"name\": \"Backup-DB\",\n      \"type\": \"PostgreSQL\",\n      \"version\": \"15\",\n      \"status\": \"online\",\n      \"location\": \"DR Site\",\n      \"size\": \"5 TB\",\n      \"tables\": 250\n    }\n  ],\n  \"total\": 7,\n  \"online\": 7,\n  \"offline\": 0,\n  \"degraded\": 0\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all databases",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "9cb75e2c-9e82-49b9-80d1-b3812e4eeaed",
+      "method": "get",
+      "endpoint": "/api/v1/branches",
+      "responses": [
+        {
+          "uuid": "3e8d0c51-e911-4201-aa75-83ff4c819310",
+          "statusCode": 200,
+          "label": "All Branches",
+          "latency": 0,
+          "filePath": "",
+          "sendFileAsBody": false,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"branches\": [\n    {\n      \"id\": \"BR-001\",\n      \"name\": \"Head Office\",\n      \"location\": \"Dhaka\",\n      \"status\": \"online\",\n      \"employees\": 250,\n      \"devices\": {\n        \"routers\": [\"RTR-001\", \"RTR-002\"],\n        \"switches\": [\"SW-001\", \"SW-002\", \"SW-003\", \"SW-004\", \"SW-005\", \"SW-006\"],\n        \"firewalls\": [\"FW-001\", \"FW-002\", \"FW-003\", \"FW-007\"],\n        \"servers\": [\"SRV-001\", \"SRV-002\", \"SRV-003\", \"SRV-004\", \"SRV-005\", \"SRV-006\", \"SRV-007\", \"SRV-008\", \"SRV-009\", \"SRV-010\", \"SRV-011\", \"SRV-012\", \"SRV-014\", \"SRV-015\", \"SRV-016\", \"SRV-017\", \"SRV-018\"]\n      },\n      \"network\": {\n        \"bandwidth\": \"10 Gbps\",\n        \"latency\": \"2ms\",\n        \"uptime\": \"99.95%\"\n      },\n      \"health_score\": 98\n    },\n    {\n      \"id\": \"BR-002\",\n      \"name\": \"Dhanmondi Branch\",\n      \"location\": \"Dhaka\",\n      \"status\": \"online\",\n      \"employees\": 45,\n      \"devices\": {\n        \"routers\": [\"RTR-003\"],\n        \"switches\": [\"SW-008\"],\n        \"firewalls\": [\"FW-004\"],\n        \"servers\": [\"SRV-019\"],\n        \"atm\": [\"ATM-001\"],\n        \"pos\": [\"POS-001\", \"POS-002\"]\n      },\n      \"network\": {\n        \"bandwidth\": \"1 Gbps\",\n        \"latency\": \"15ms\",\n        \"uptime\": \"99.87%\"\n      },\n      \"health_score\": 95\n    },\n    {\n      \"id\": \"BR-003\",\n      \"name\": \"Gulshan Branch\",\n      \"location\": \"Dhaka\",\n      \"status\": \"online\",\n      \"employees\": 60,\n      \"devices\": {\n        \"routers\": [\"RTR-004\"],\n        \"switches\": [\"SW-009\"],\n        \"firewalls\": [\"FW-005\"],\n        \"servers\": [\"SRV-020\"],\n        \"atm\": [\"ATM-002\"],\n        \"pos\": [\"POS-003\"]\n      },\n      \"network\": {\n        \"bandwidth\": \"1 Gbps\",\n        \"latency\": \"18ms\",\n        \"uptime\": \"99.80%\"\n      },\n      \"health_score\": 92\n    },\n    {\n      \"id\": \"BR-004\",\n      \"name\": \"Chittagong Branch\",\n      \"location\": \"Chittagong\",\n      \"status\": \"degraded\",\n      \"employees\": 85,\n      \"devices\": {\n        \"routers\": [\"RTR-005\"],\n        \"switches\": [\"SW-010\"],\n        \"firewalls\": [\"FW-006\"],\n        \"servers\": [\"SRV-021\"],\n        \"atm\": [\"ATM-003\"],\n        \"pos\": [\"POS-004\"]\n      },\n      \"network\": {\n        \"bandwidth\": \"500 Mbps\",\n        \"latency\": \"45ms\",\n        \"uptime\": \"98.50%\"\n      },\n      \"health_score\": 78,\n      \"issues\": [\"High latency\", \"Degraded performance\"]\n    },\n    {\n      \"id\": \"BR-005\",\n      \"name\": \"Khulna Branch\",\n      \"location\": \"Khulna\",\n      \"status\": \"offline\",\n      \"employees\": 30,\n      \"devices\": {\n        \"routers\": [\"RTR-006\"],\n        \"switches\": [\"SW-011\"],\n        \"firewalls\": [\"FW-008\"],\n        \"servers\": [],\n        \"atm\": [\"ATM-004\"],\n        \"pos\": []\n      },\n      \"network\": {\n        \"bandwidth\": \"0 Mbps\",\n        \"latency\": \"0ms\",\n        \"uptime\": \"0%\"\n      },\n      \"health_score\": 0,\n      \"issues\": [\"Internet down\", \"All devices offline\"]\n    }\n  ],\n  \"total\": 5,\n  \"online\": 3,\n  \"degraded\": 1,\n  \"offline\": 1\n}",
+          "rules": [],
+          "disableTemplating": false,
+          "rulesOperator": "OR",
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "documentation": "List of all bank branches",
+      "responseMode": null,
+      "type": "http",
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "cors": true,
+  "headers": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "data": [],
+  "folders": [],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "95034c30-186b-4837-ba43-e6b96d3ce09b"
+    },
+    {
+      "type": "route",
+      "uuid": "4b7f9841-842a-4c4c-a13b-73ae7c6875b1"
+    },
+    {
+      "type": "route",
+      "uuid": "38192940-7080-4977-86a4-8389dfa2e64c"
+    },
+    {
+      "type": "route",
+      "uuid": "7c02a678-f355-44e1-ad80-75484e0d96b9"
+    },
+    {
+      "type": "route",
+      "uuid": "ee90fc54-a8ca-43c9-a1e5-fcf374cd3709"
+    },
+    {
+      "type": "route",
+      "uuid": "571c5f8f-5672-46fc-aa89-1b96cc6259bb"
+    },
+    {
+      "type": "route",
+      "uuid": "15172690-626e-4f49-be73-945f994f5bed"
+    },
+    {
+      "type": "route",
+      "uuid": "3defe57a-ec84-4ce8-8679-9a31669697fd"
+    },
+    {
+      "type": "route",
+      "uuid": "6c2e7dbf-3894-463c-b7a5-541a0d14fef7"
+    },
+    {
+      "type": "route",
+      "uuid": "074c5869-095a-4f72-92a1-10c2e79309bd"
+    },
+    {
+      "type": "route",
+      "uuid": "d03e4d9e-300f-4ce1-807f-ae432e44fef3"
+    },
+    {
+      "type": "route",
+      "uuid": "9cb75e2c-9e82-49b9-80d1-b3812e4eeaed"
+    }
+  ],
+  "callbacks": [],
+  "proxyMode": false,
+  "proxyHost": ""
+}
